@@ -1,8 +1,8 @@
-# 预算句子分类项目
+# 文本二分类项目
 
 ## 🚀 项目概述
 
-本项目基于BERT实现了一个二分类模型，旨在识别和分类与财政目标指标相关的句子。该模型能够从给定的文本语料库中检测和筛选预算特定的句子。
+本项目基于BERT实现了一个二分类模型，旨在分类一个财政文本句子，是否包含我所需的目标指标数值，如果这个句子包含该指标为分类为1，反之为0。
 
 ## ✨ 主要特性
 
@@ -43,17 +43,16 @@ budget-classification/
 ├── src/
 │   ├── binary_classify.py      # 主训练脚本
 │   ├── BudgetSentence_cls.py   # 推理脚本
-│   └── config.py               # 配置管理
 │
-├── model/                      # 保存的模型权重
-├── logging/                    # TensorBoard日志
+├── model/                      # 保存的模型权重bert-base-chinese后续可以放在这个文件夹中
+├── logging/                    # TensorBoard日志，保存训练过程
 ├── requirements.txt            # 项目依赖
 └── README.md                   # 项目文档
 ```
 
 ## 🔧 配置参数
 
-关键配置参数在 `config.py` 中管理：
+关键配置参数：
 - 预训练模型路径
 - 数据集路径
 - 分词器设置
@@ -74,16 +73,23 @@ budget-classification/
 链接: https://pan.baidu.com/s/1rX2QU7stVN4g6WNZNRRx4g?pwd=4eam 提取码: 4eam
 ```
 
-### 修改binary_classify.py中的模型路径（第二十四行）
+### 修改binary_classify.py中的参数配置（模型、tokenizer路径和训练数据集路径）
 
 ```
-pretrained_model_name_or_path = Config.pretrained_model_name_or_path
+Config.pretrained_model_name_or_path
+Config.budget_dataset_path
 ```
 
-### 训练
+### 准备好自己的数据集
+
+```
+仿照budget_dataset.xlsx格式准备自己的数据集
+```
+
+### 训练（5个epoch、4000条数据集，cpu训练耗时8h左右）
 
 ```bash
-python src/binary_classify.py
+python binary_classify.py
 ```
 
 ### 推理
